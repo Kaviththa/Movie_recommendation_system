@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVIE| RECO</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+    <link href="{{url_for('static',filename='assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='assets/vendor/aos/aos.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+</head>
+
+<body>
+    <!-- header -->
+    <nav class="navbar navbar-expand-sm ">
+        <div class="container">
+            <a class="navbar-brand" href="#">MOVIE PRO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample03">
+                <ul class="navbar-nav mx-auto mb-2 mb-sm-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{url_for('index')}}">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('index')}}">LEATEST</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('index')}}">POPULAR</a>
+                    </li>
+                </ul>
+                <form class="d-flex" method="POST" action="{{url_for('recommend')}}">
+                    <input class="form-control search " type="text" placeholder="Search movie" aria-label="Search" name="q">
+                    <button type="submit" class="btn btn-5 text-white">submit</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- end header -->
+    <main>
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card mb-3 shadow-sm" data-aos="zoom-out">
+                        <div class="row g-0" data-aos="fade-up" data-aos-delay="100">
+                            <div class="col-md-4 my-auto">
+                                <div class="card shadow-md mar border my-3">
+                                    <img src="https://image.tmdb.org/t/p/w500/{{movie_data.poster_path}}" class="border hover-effect" height="350">
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body text-center ">
+                                    <h4 class="card-title font-arial text-center">{{movie_data.title}}</h4>
+                                    <p class="  text-muted">{{movie_data.overview}}</p>
+                                    <p class="text-muted ">Release date<span class=" ms-4">{{movie_data.release_date}}</span></p>
+                                    <p class="text-muted">Popularity<span class=" ms-4">{{movie_data.popularity}}</span></p>
+                                    <p class=" text-muted font-arial"> Genre</p>
+                                    {% for genre in movie_data.genres %}
+                                    <span class="badge bg-primary">{{genre.name}}</span> {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div>
+
+                        {% for review in review_data %}
+                        <p>{{review.author}}</p>
+                        <p>{{review.content}}</p>
+                        {% endfor %}
+
+                    </div> -->
+                    <div class="row g-2" id="#recomm" data-aos="zoom-in">
+                        <h2 class="text-danger font-arial">RECOMMEDED MOVIES</h2>
+                        {% for recommended_movie in recommended_movie_dict %}
+                        <div class="col-md-4 recom">
+                            <div class="card " style=" box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.3);  ">
+                                <img src="https://image.tmdb.org/t/p/w500/{{recommended_movie.poster_path}}" class="card-img-top"></img>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-md-4" id="#cast" data-aos="fade-up">
+                    <h5 class="font-arial"> MOVIE TOP CASTS</h5>
+                    {% for casts in cast_dict %}
+                    <div class="card mb-3 shadow-sm " style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-5">
+                                <img src="https://image.tmdb.org/t/p/w500/{{casts.profile_path}}" alt="..." class="img-fluid">
+                            </div>
+                            <div class="col-md-7 " style="background-color: rgb(176, 182, 182);">
+                                <div class="card-body py-5  ">
+                                    <h5 class="card-title font-arial text-white">{{casts.name}}</h5>
+                                    <p class="card-text font-arial">{{casts.character}}</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+
+            </div>
+        </div>
+        </div>
+    </main>
+    <footer class="moive-footer text-center ">
+        <p class="text-dark">MOVIE PRO | KAVITHA</p>
+    </footer>
+
+    <style>
+        body {
+            background-color: white;
+        }
+        
+        .navbar {
+            background-color: rgb(193, 202, 207);
+        }
+        
+        .navbar-brand {
+            font-size: 2rem;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            color: black;
+        }
+        
+        .font-arial {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        
+        .navbar-brand:hover {
+            color: black;
+        }
+        
+        .nav-link {
+            margin-right: 20px;
+            margin-left: 20px;
+            color: black;
+        }
+        
+        .nav-link.active {
+            color: darkgreen;
+        }
+        
+        .nav-link:hover {
+            color: white;
+        }
+        
+        .navbar-toggler-icon {
+            background-color: black;
+        }
+        
+        .search {
+            border-radius: 20px;
+            border: 1px solid rgb(12, 12, 12);
+            outline: none;
+        }
+        
+        .btn-5 {
+            background-color: rgb(12, 12, 12);
+            border-radius: 20px;
+            margin-left: -55px;
+        }
+        
+        .mar {
+            margin-left: -20px;
+        }
+        
+        .border {
+            border-radius: 15px;
+        }
+        
+        .recom:hover {
+            transform: scale(1.01);
+            transition: .5s;
+        }
+        
+        footer {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            background-color: rgb(193, 202, 207);
+        }
+        
+        footer p {
+            margin-bottom: .25rem;
+        }
+    </style>
+
+
+
+
+
+    <script src="{{url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/aos/aos.js')}}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+</body>
+
+</html>

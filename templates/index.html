@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOVIE| RECO</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+    <link href="{{url_for('static',filename='assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='assets/vendor/aos/aos.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+</head>
+
+<body>
+    <!-- header -->
+    <nav class="navbar navbar-expand-sm ">
+        <div class="container">
+            <a class="navbar-brand" href="#">MOVIE PRO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExample03">
+                <ul class="navbar-nav mx-auto mb-2 mb-sm-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{url_for('index')}}">HOME</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#latest">LEATEST</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">POPULAR</a>
+                    </li>
+                </ul>
+                <form class="d-flex" method="POST" action="{{url_for('recommend')}}">
+                    <input class="form-control search " type="text" placeholder="Search movie" aria-label="Search" name="q">
+                    <button type="submit" class="btn btn-5 text-white">submit</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- end header -->
+
+    <!-- main -->
+    <main>
+        <section id="hero">
+            <div class="container-fluid">
+                <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="overlay">
+                                <img src="{{url_for('static', filename='images/bg-1.jpg')}}" width="100%" height="550px">
+                            </div>
+                            <div class="container">
+                                <div class="carousel-caption text-start">
+                                    <h1>MOVIE PRO RECOMMENDATION</h1>
+                                    <p>Some representative placeholder content for the first slide of the carousel.</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="overlay">
+                                <img src="{{url_for('static', filename='images/bg-6.jpg')}}" width="100%" height="550px">
+                            </div>
+                            <div class="container">
+                                <div class="carousel-caption">
+                                    <h1>MOVIE PRO RECOMMENDATION</h1>
+                                    <p>Some representative placeholder content for the second slide of the carousel.</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="overlay">
+                                <img width="100%" height="550px" src="{{url_for('static', filename='images/img-hh.jpg')}}">
+                            </div>
+
+                            <div class="container">
+                                <div class="carousel-caption text-end">
+                                    <h1>MOVIE PRO RECOMMENDATION</h1>
+                                    <p>Some representative placeholder content for the third slide of this carousel.</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                             <span class="visually-hidden">Previous</span>
+                        </button>
+
+                    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="latest">
+
+            <div class="container">
+
+                <h2 class="font-arial mt-5" data-aos="zoom-out">Top rated moives</h2>
+                <div class="row my-5" data-aos="fade-up" data-aos-delay="100">
+                    {% for result in latest_movie_data[7:15] %}
+                    <div class="col-md-3 mt-2">
+                        <div class="card latest " style=" box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.3);  ">
+                            <img class="card-img-top" src="https://image.tmdb.org/t/p/w500/{{result.poster_path}}" alt="Card image">
+                            <div class="card-body">
+                                <h5 class="font-arial mb-0 float-start">{{result.title}}</h5>
+                                <button class="round btn  btn-outline-success float-end">{{result.vote_average}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+            </div>
+        </section>
+
+
+        <!-- ======= Testimonials Section ======= -->
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+
+                <div class="section-title" data-aos="zoom-out">
+                    <h2 class="font-arial">Pupular Movies</h2>
+                </div>
+
+                <div class="testimonials-slider swiper-container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="swiper-wrapper">
+                        {% for result in select_movie_data[:8] %}
+                        <div class="swiper-slide">
+                            <div class="testimonial-item">
+                                <img src="https://image.tmdb.org/t/p/w500/{{result.poster_path}}" class="testimonial-img" alt="">
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!-- End testimonial item -->
+
+
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+
+            </div>
+        </section>
+        <!-- End Testimonials Section -->
+        <footer class="moive-footer text-center ">
+            <p class="text-dark">MOVIE PRO | KAVITHA</p>
+        </footer>
+
+
+    </main>
+    <!-- end main -->
+
+
+
+    <style>
+        body {
+            background-color: white;
+        }
+        
+        .navbar {
+            background-color: white;
+        }
+        
+        .navbar-brand {
+            font-size: 2rem;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            color: black;
+        }
+        
+        .font-arial {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        
+        .navbar-brand:hover {
+            color: black;
+        }
+        
+        .nav-link {
+            margin-right: 20px;
+            margin-left: 20px;
+            color: black;
+        }
+        
+        .nav-link.active {
+            color: darkgreen;
+        }
+        
+        .nav-link:hover {
+            color: rgb(72, 22, 189);
+        }
+        
+        .navbar-toggler-icon {
+            background-color: black;
+        }
+        
+        .search {
+            border-radius: 20px;
+            border: 1px solid rgb(12, 12, 12);
+            outline: none;
+        }
+        
+        .btn-5 {
+            background-color: rgb(12, 12, 12);
+            border-radius: 20px;
+            margin-left: -55px;
+        }
+        
+        .carousel-inner {
+            border-radius: 25px;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .carousel-inner::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(5, 5, 5, 0.3), rgba(5, 5, 5, 0.5));
+            z-index: 1;
+            transform: translateX(-50%) rotate(0deg);
+        }
+        
+        .latest:hover {
+            transform: scale(1.01);
+            transition: .5s;
+        }
+        
+        .round {
+            border-radius: 20px;
+        }
+        /*--------------------------------------------------------------
+# Testimonials
+--------------------------------------------------------------*/
+        
+        .testimonials .testimonial-item {
+            box-sizing: content-box;
+            margin: 30px 15px;
+            text-align: center;
+            min-height: 300px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .testimonials .testimonial-item .testimonial-img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        
+        .testimonials .swiper-pagination {
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .testimonials .swiper-pagination .swiper-pagination-bullet {
+            width: 12px;
+            height: 12px;
+            background-color: #fff;
+            opacity: 1;
+            border: 1px solid #0c0c0c;
+        }
+        
+        .testimonials .swiper-pagination .swiper-pagination-bullet-active {
+            background-color: #0e0d0d;
+        }
+        
+        footer {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            background-color: rgb(193, 202, 207);
+        }
+        
+        footer p {
+            margin-bottom: .25rem;
+        }
+    </style>
+
+
+
+
+
+    <script src="{{url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url_for('static', filename='assets/vendor/aos/aos.js')}}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{url_for('static', filename='assets/js/main.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+</body>
+
+</html>
